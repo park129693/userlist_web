@@ -1,8 +1,9 @@
 var express = require('express') //'()'는 매개 변수, 어떠한 라이브러리를 사용할 때 사용.
 var path = require('path')
-var mysql = require('mysql')
 var app = express()
+var apiRouter = require('./routes/api_router')
 
+/*
 sql_config = {
     host:'localhost',
     user:'root',
@@ -10,17 +11,17 @@ sql_config = {
     database:'o2'
 }
 var db = mysql.createConnection(sql_config)
-
 db.connect()
+*/
 
 app.set('views', path.resolve(__dirname + '/views')) //__dirname:현재까지의 절대경로 표시
 app.set('view engine', 'ejs')
 
 app.use(express.json()) //.use에 인자값, 미들웨어 사용.
-app.use(express.urlencoded({extended:false})) //.use에 인자값, 미들웨어 사용.  
+app.use(express.urlencoded({extended:false})) //.use에 인자값, 미들웨어 사용.
+app.use('/', apiRouter)
 
-
-app.get('/hello', (request, respose)=>{
+/*app.get('/hello', (request, respose)=>{
    // console.log(request)
     var name = "참치"
     respose.render('hello',{data:name})
@@ -38,7 +39,7 @@ app.get('/data', (req, res)=>{
             res.render(`data`, {data:result})
         }
     })
-})
+})*/
 
 //console.log(path.resolve(__dirname + '/views'))
 var port = 8000;
