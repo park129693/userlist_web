@@ -77,17 +77,31 @@ router.post('/topic/:id/edit', (req, res)=>{
     })
 })
 
-router.post('/topic/:id', (req, res)=>{
-    var id = req.body.id
-    var sql = `DELETE FROM topic WHERE id=${id}`
-    db.query(sql, (err, result)=>{
-        if(err){
-            console.log(err)
-            res.status(404).send("Not Found")
-        }
-        console.log(result)
-        res.redirect(`/topic/${id}`)
-    })
+router.get('/topic/delete/:delid', (req, res)=>{
+    var delid = req.params.delid
+    db.query(`SELECT * FROM topic WHERE id=${delid}`, (err, results)=>{
+        var title = results[0].title
+        var description = results[0].description
+        var author = results[0].author
+        var deleData = [title, description, author]
+
+        
+        var sql_1 = `INSERT INTO deletelist (title, description, author) VALUES(?, ?, ?)`
+        db.query(sql_1, deleData, (err, result_1)=>{
+            var sql = `DELETE FROM topic WHERE id=${delid}`
+            if(err) {
+                console.log(err)
+            }
+            db.query(sql, (err, result)=>{
+                if(err) {
+                    console.log(err)
+                    res.status(404).send("Not Found")
+                }
+                console.log(result_1)
+                res.redirect('/topic')
+            })
+        })
+    }) 
 })
 
 router.get(['/topic','/topic/:id'], (req, res)=>{

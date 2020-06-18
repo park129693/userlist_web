@@ -31,29 +31,33 @@
             <td> <a href="/topic/<%= topics[i].id %>"><%= topics[i].title %></a></td>
             <td><%= topics[i].description %></td>
             <td><%= topics[i].author %></td>
-            <td>Delete</td>
+            <td><a href="/topic/delete/<%= topics[i].id %>" onclick="return deleteConfirm()"><button type="button" class="btn btn-warning">삭제</button></a></td>
           </tr>
             <% } %>
         </tbody>
       </table>
-    <ol>
-        <% for(i=0;i<topics.length;i++) {%>
-        <a href="/topic/<%= topics[i].id %>">
-        <li><%= topics[i].title %> </a> &nbsp;:&nbsp; <%= topics[i].description %>
-            <a href="/topic/add"><button type="button" class="btn btn-danger">삭제</button></a>
-        </li>
-        <% } %>
-    </ol>
-    <% if(topic) {  %>
-    <h2><%= topic.title %></h2>
-    <p><%= topic.description %></p>
-    <p>by <%= topic.author %></p>
-        <a href="/topic/add"><button type="button" class="btn btn-danger">삭제</button></a>
-        <a href="/topic/edit/<%= topic.id %>"><button type="button" class="btn btn-success">수정</button></a>
+      <% if(topic) {  %>
+        <div class="card card bg-info" >
+            <%= topic.title %>
+        </div>
+        <div class="card card bg-secondary" >
+            <p><%= topic.description %></p>
+            <p>by <%= topic.author %></p> <br>
+        </div>
+        <div class="card">
+            <a href="/topic/edit/<%= topic.id %>"><button type="button" class="btn btn-success">수정</button></a>
+        </div>
     <% } else {  %>
-        <h2>Welcome</h2>
-        This is Server Side JavaScript Tutorial <br>
-        <a href="/topic/add"><button type="button" class="btn btn-primary">추가</button></a>
+        <div class="card card bg-info" >
+            <div class="card-body">Welcome</div>
+            This is Server Side JavaScript Tutorial <br>
+            <a href="/topic/add"><button type="button" class="btn btn-primary">추가</button></a>
+        </div>
     <% } %>
+    <script>
+        function deleteConfirm(){
+            return confirm("정말 삭제하시겠습니다?")
+        }
+    </script>
 </body>
 </html>
