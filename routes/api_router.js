@@ -77,7 +77,7 @@ router.post('/topic/:id/edit', (req, res)=>{
     })
 })
 
-router.post('/topic', (req, res)=>{
+router.post('/topic/:id', (req, res)=>{
     var id = req.body.id
     var sql = `DELETE FROM topic WHERE id=${id}`
     db.query(sql, (err, result)=>{
@@ -86,7 +86,7 @@ router.post('/topic', (req, res)=>{
             res.status(404).send("Not Found")
         }
         console.log(result)
-        res.redirect('/topic')
+        res.redirect(`/topic/${id}`)
     })
 })
 
